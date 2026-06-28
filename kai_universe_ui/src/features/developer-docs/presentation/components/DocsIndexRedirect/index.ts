@@ -1,0 +1,1 @@
+export { DocsIndexRedirect } from './DocsIndexRedirect';

@@ -1,0 +1,31 @@
+{
+  "platform": "macos",
+  "cpu": {
+    "brand": "Apple M3 Max",
+    "cores": 14,
+    "threads": 14,
+    "architecture": "arm64",
+    "performanceCores": 10,
+    "efficiencyCores": 4
+  },
+  "gpu": {
+    "vendor": "apple",
+    "model": "Apple M3 Max",
+    "coreCount": 40,
+    "vramBytes": 38654705664,
+    "metalSupported": true,
+    "cudaSupported": false,
+    "rocmSupported": false,
+    "vulkanSupported": false
+  },
+  "memory": {
+    "totalBytes": 68719476736,
+    "availableBytes": 32212254720
+  },
+  "storageAvailableBytes": 854834958336,
+  "availableEngines": [
+    { "kind": "mlx", "version": "0.21.0", "recommended": true },
+    { "kind": "llama.cpp", "version": "b3905", "recommended": false }
+  ],
+  "osVersion": "macOS 14.6.1 (Sonoma)"
+}

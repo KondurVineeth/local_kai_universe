@@ -1,0 +1,1 @@
+export { DiscoverSecondarySidebar } from './DiscoverSecondarySidebar';

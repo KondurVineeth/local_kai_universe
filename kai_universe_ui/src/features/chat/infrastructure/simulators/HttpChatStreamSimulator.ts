@@ -1,0 +1,56 @@
+import type {
+  ChatStreamSimulator,
+  SimulateOptions,
+} from '../../domain/ports/ChatStreamSimulator';
+
+import type { MessageChunk } from '../../domain/ports/MessageChunk';
+import type { Message } from '../../domain/entities/Message';
+import type { ThreadId } from '../../domain/value-objects/ThreadId';
+
+const API_URL = 'http://127.0.0.1:8000/api/v1/chat';
+
+export class HttpChatStreamSimulator implements ChatStreamSimulator {
+  async *simulate(
+    _threadId: ThreadId,
+    history: readonly Message[],
+    _options?: SimulateOptions,
+  ): AsyncIterable<MessageChunk> {
+    const messages = history.map((message) => ({
+      role: message.role,
+      content: message.content,
+    }));
+
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+    model: "google/gemma-2-2b-it",   // use any model that is working
+    messages,
+    max_completion_tokens: 1024,
+    temperature: 0,
+    top_p: 1,
+    stream: false,
+}),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to call backend');
+    }
+
+    const result = await response.json();
+
+    yield {
+      kind: 'content',
+      delta: result.content,
+      done: false,
+    };
+
+    yield {
+      kind: 'content',
+      delta: '',
+      done: true,
+    };
+  }
+}

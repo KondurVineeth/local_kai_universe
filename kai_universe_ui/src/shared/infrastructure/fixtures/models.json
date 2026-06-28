@@ -1,0 +1,1795 @@
+[
+  {
+    "id": "qwen2.5-7b-instruct",
+    "displayName": "Qwen 2.5 7B Instruct",
+    "author": "qwen",
+    "description": "Multilingual instruction-tuned model from the Qwen 2.5 family. Function calling, JSON-mode, 29 languages.",
+    "contextLengthTokens": 32768,
+    "parameterCountB": 7.6,
+    "format": "gguf",
+    "arch": "qwen2",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 4683074272,
+        "recommended": true
+      },
+      {
+        "quantization": "Q5_K_M",
+        "format": "gguf",
+        "sizeBytes": 5444831584,
+        "recommended": false
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 8098523392,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 4279414528,
+        "recommended": false
+      },
+      {
+        "quantization": "8bit",
+        "format": "mlx",
+        "sizeBytes": 8045465600,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Qwen 2.5 7B Instruct\n\nQwen 2.5 is the latest series of large language models from Alibaba's Qwen team. The 7B Instruct variant is post-trained for chat, function calling, and structured-output use cases.\n\n## Highlights\n\n- 29 languages supported, with notable improvements in coding and mathematics\n- Native function calling and JSON-mode output\n- 32K-token context, 8K-token generation length\n\nRecommended for general-purpose chat workloads on consumer hardware.\n",
+    "downloadCount": 482931,
+    "starCount": 312,
+    "publishedAt": "2025-09-18T08:00:00Z",
+    "tags": [
+      "chat",
+      "tools",
+      "multilingual"
+    ],
+    "staffPick": true
+  },
+  {
+    "id": "qwen2.5-14b-instruct",
+    "displayName": "Qwen 2.5 14B Instruct",
+    "author": "qwen",
+    "description": "Mid-size Qwen 2.5 dense instruct model. Stronger reasoning and code than the 7B at single-GPU cost.",
+    "contextLengthTokens": 32768,
+    "parameterCountB": 14.7,
+    "format": "gguf",
+    "arch": "qwen2",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 8988366848,
+        "recommended": true
+      },
+      {
+        "quantization": "Q5_K_M",
+        "format": "gguf",
+        "sizeBytes": 10508873216,
+        "recommended": false
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 15706898432,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 8255487488,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Qwen 2.5 14B Instruct\n\nThe 14B sibling of Qwen 2.5. Notable gains over the 7B on code, math, and long-form reasoning. Comfortable to run on a single 16GB+ GPU.\n",
+    "downloadCount": 312044,
+    "starCount": 187,
+    "publishedAt": "2025-09-18T08:00:00Z",
+    "tags": [
+      "chat",
+      "tools",
+      "code"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "qwen2.5-32b-instruct",
+    "displayName": "Qwen 2.5 32B Instruct",
+    "author": "qwen",
+    "description": "Flagship dense Qwen 2.5. Competitive with GPT-4-class models on instruction following and code.",
+    "contextLengthTokens": 32768,
+    "parameterCountB": 32.5,
+    "format": "gguf",
+    "arch": "qwen2",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": true,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 19851476992,
+        "recommended": true
+      },
+      {
+        "quantization": "Q6_K",
+        "format": "gguf",
+        "sizeBytes": 26886154240,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 18347249664,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Qwen 2.5 32B Instruct\n\nFlagship Qwen 2.5 dense model. ~24 GB free at Q4_K_M; runs comfortably on Apple Silicon with 32 GB unified memory.\n",
+    "downloadCount": 198421,
+    "starCount": 264,
+    "publishedAt": "2025-09-18T08:00:00Z",
+    "tags": [
+      "chat",
+      "tools",
+      "reasoning"
+    ],
+    "staffPick": true
+  },
+  {
+    "id": "qwen2.5-coder-7b-instruct",
+    "displayName": "Qwen 2.5 Coder 7B Instruct",
+    "author": "qwen",
+    "description": "Code-specialised Qwen 2.5. Trained on 5.5T code-heavy tokens. 128K context for whole-repo prompts.",
+    "contextLengthTokens": 131072,
+    "parameterCountB": 7.6,
+    "format": "gguf",
+    "arch": "qwen2",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 4683074272,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 8098523392,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 4279414528,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Qwen 2.5 Coder 7B Instruct\n\nCode-tuned Qwen 2.5 with 128K context \u2014 comfortable swallowing whole repos. Strong at fill-in-the-middle and multi-language synthesis.\n",
+    "downloadCount": 261109,
+    "starCount": 198,
+    "publishedAt": "2025-11-12T08:00:00Z",
+    "tags": [
+      "code",
+      "long-context"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "qwen3-4b-thinking-2507",
+    "displayName": "Qwen3 4B Thinking 2507",
+    "author": "qwen",
+    "description": "Reasoning-tuned Qwen3 4B. Emits a deliberation trace before answering \u2014 the 'thinking' variant.",
+    "contextLengthTokens": 32768,
+    "parameterCountB": 4.0,
+    "format": "gguf",
+    "arch": "qwen3",
+    "capabilities": {
+      "tools": false,
+      "vision": false,
+      "reasoning": true,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 2752053248,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 4654780416,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 2469004288,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Qwen3 4B Thinking 2507\n\nUpdated thinking version of Qwen3 4B featuring continued reinforcement learning. Best for problems where step-by-step reasoning helps.\n\n## Behaviour\n\nThe model emits a `<think>` block before the final answer. Universe parses this into a collapsible 'Thought for Xs' disclosure.\n",
+    "downloadCount": 142809,
+    "starCount": 156,
+    "publishedAt": "2026-04-02T08:00:00Z",
+    "tags": [
+      "reasoning",
+      "thinking"
+    ],
+    "staffPick": true
+  },
+  {
+    "id": "qwen3-8b",
+    "displayName": "Qwen3 8B",
+    "author": "qwen",
+    "description": "Next-gen Qwen3 dense 8B. Hybrid thinking/non-thinking modes, native 32K context.",
+    "contextLengthTokens": 32768,
+    "parameterCountB": 8.2,
+    "format": "gguf",
+    "arch": "qwen3",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": true,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 4920734720,
+        "recommended": true
+      },
+      {
+        "quantization": "Q5_K_M",
+        "format": "gguf",
+        "sizeBytes": 5732987136,
+        "recommended": false
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 8542302464,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 4502618112,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Qwen3 8B\n\nThe next Qwen generation. Toggleable thinking via the reasoning chat tag \u2014 same model serves both fast-chat and deliberate-reasoning use cases.\n",
+    "downloadCount": 421887,
+    "starCount": 289,
+    "publishedAt": "2026-03-28T08:00:00Z",
+    "tags": [
+      "chat",
+      "tools",
+      "reasoning"
+    ],
+    "staffPick": true
+  },
+  {
+    "id": "qwen2-vl-7b-instruct",
+    "displayName": "Qwen2-VL 7B Instruct",
+    "author": "qwen",
+    "description": "Vision-language Qwen2. Dynamic resolution, strong on chart, document, and screen understanding.",
+    "contextLengthTokens": 32768,
+    "parameterCountB": 7.6,
+    "format": "gguf",
+    "arch": "qwen2-vl",
+    "capabilities": {
+      "tools": false,
+      "vision": true,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 5012345600,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 8334000000,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 4502618112,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Qwen2-VL 7B Instruct\n\nMultimodal Qwen2. Pass images alongside text prompts. Handles arbitrary resolutions natively (no resize to 224x224).\n",
+    "downloadCount": 178921,
+    "starCount": 178,
+    "publishedAt": "2025-08-29T08:00:00Z",
+    "tags": [
+      "vision",
+      "multimodal"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "meta-llama-3.1-8b-instruct",
+    "displayName": "Llama 3.1 8B Instruct",
+    "author": "meta-llama",
+    "description": "Meta's open-weight 8B instruction model. 128K context, tool use, multilingual.",
+    "contextLengthTokens": 131072,
+    "parameterCountB": 8.0,
+    "format": "gguf",
+    "arch": "llama",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": true,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 4920734720,
+        "recommended": true
+      },
+      {
+        "quantization": "Q6_K",
+        "format": "gguf",
+        "sizeBytes": 6596005376,
+        "recommended": false
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 8540774912,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 4502618112,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Llama 3.1 8B Instruct\n\nMeta's open-weight instruction-tuned model. 128K-token context, supports tool calling, eight languages (en, fr, de, es, it, pt, hi, th).\n\nReleased under the Llama 3.1 Community Licence.\n",
+    "downloadCount": 1842091,
+    "starCount": 1432,
+    "publishedAt": "2025-07-23T08:00:00Z",
+    "tags": [
+      "chat",
+      "tools",
+      "long-context"
+    ],
+    "staffPick": true
+  },
+  {
+    "id": "meta-llama-3.1-70b-instruct",
+    "displayName": "Llama 3.1 70B Instruct",
+    "author": "meta-llama",
+    "description": "Meta's open-weight 70B flagship. Runs on serious hardware (~42 GB at Q4); near GPT-4 quality.",
+    "contextLengthTokens": 131072,
+    "parameterCountB": 70.6,
+    "format": "gguf",
+    "arch": "llama",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": true,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 42520149504,
+        "recommended": true
+      },
+      {
+        "quantization": "Q5_K_M",
+        "format": "gguf",
+        "sizeBytes": 49949817856,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 39729393664,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Llama 3.1 70B Instruct\n\nMeta's 70B flagship from the Llama 3.1 family. ~42 GB free at Q4_K_M.\n",
+    "downloadCount": 723441,
+    "starCount": 821,
+    "publishedAt": "2025-07-23T08:00:00Z",
+    "tags": [
+      "chat",
+      "tools",
+      "long-context"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "meta-llama-3.2-1b-instruct",
+    "displayName": "Llama 3.2 1B Instruct",
+    "author": "meta-llama",
+    "description": "Edge-tier Llama 3.2. ~800 MB at Q4 \u2014 runs on phones, laptops, anything with 2 GB free.",
+    "contextLengthTokens": 131072,
+    "parameterCountB": 1.24,
+    "format": "gguf",
+    "arch": "llama",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 808439584,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 1321079360,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 727670656,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Llama 3.2 1B Instruct\n\nFor edge devices. Surprisingly capable at chitchat and simple tools. 128K context inherited from the Llama 3 architecture.\n",
+    "downloadCount": 891204,
+    "starCount": 612,
+    "publishedAt": "2025-09-25T08:00:00Z",
+    "tags": [
+      "chat",
+      "tiny",
+      "on-device"
+    ],
+    "staffPick": true
+  },
+  {
+    "id": "meta-llama-3.2-3b-instruct",
+    "displayName": "Llama 3.2 3B Instruct",
+    "author": "meta-llama",
+    "description": "Small Llama 3.2 for fast inference. The practical default for on-device assistant work.",
+    "contextLengthTokens": 131072,
+    "parameterCountB": 3.21,
+    "format": "gguf",
+    "arch": "llama",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 2019346432,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 3421616128,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 1843234560,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Llama 3.2 3B Instruct\n\nThe practical default for fast on-device chat. 128K context, tool calling, eight languages.\n",
+    "downloadCount": 1102339,
+    "starCount": 743,
+    "publishedAt": "2025-09-25T08:00:00Z",
+    "tags": [
+      "chat",
+      "tools",
+      "on-device"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "meta-llama-3.2-11b-vision-instruct",
+    "displayName": "Llama 3.2 11B Vision Instruct",
+    "author": "meta-llama",
+    "description": "Meta's open-weight multimodal model. Image + text in, text out. Documents, charts, OCR.",
+    "contextLengthTokens": 131072,
+    "parameterCountB": 10.7,
+    "format": "gguf",
+    "arch": "mllama",
+    "capabilities": {
+      "tools": false,
+      "vision": true,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 6700000000,
+        "recommended": true
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 6210000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Llama 3.2 11B Vision Instruct\n\nOpen-weight multimodal. Image understanding, charts, OCR. Vision adapter sits on top of the Llama 3.1 8B text backbone with additional vision layers (~3B).\n",
+    "downloadCount": 384020,
+    "starCount": 421,
+    "publishedAt": "2025-09-25T08:00:00Z",
+    "tags": [
+      "vision",
+      "multimodal"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "meta-llama-3.3-70b-instruct",
+    "displayName": "Llama 3.3 70B Instruct",
+    "author": "meta-llama",
+    "description": "Late-2024 refresh of Llama 70B. Closer to 405B quality at 70B compute.",
+    "contextLengthTokens": 131072,
+    "parameterCountB": 70.6,
+    "format": "gguf",
+    "arch": "llama",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": true,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 42520149504,
+        "recommended": true
+      },
+      {
+        "quantization": "Q5_K_M",
+        "format": "gguf",
+        "sizeBytes": 49949817856,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 39729393664,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Llama 3.3 70B Instruct\n\nDecember-2024 refresh of the Llama 3.1 70B. Big quality jump \u2014 Meta's published evals put it close to the (much larger) 405B in chat and instruction following.\n",
+    "downloadCount": 612844,
+    "starCount": 894,
+    "publishedAt": "2025-12-06T08:00:00Z",
+    "tags": [
+      "chat",
+      "tools",
+      "reasoning"
+    ],
+    "staffPick": true
+  },
+  {
+    "id": "google-gemma-2-2b-it",
+    "displayName": "Gemma 2 2B Instruct",
+    "author": "google",
+    "description": "Tiny Gemma 2 instruct. Punches above its weight via large-model distillation.",
+    "contextLengthTokens": 8192,
+    "parameterCountB": 2.61,
+    "format": "gguf",
+    "arch": "gemma2",
+    "capabilities": {
+      "tools": false,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 1708583168,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 2784494848,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 1554000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Gemma 2 2B Instruct\n\nGoogle's edge-friendly chat model from the Gemma 2 family. Trained via distillation from larger Gemma siblings.\n",
+    "downloadCount": 521093,
+    "starCount": 487,
+    "publishedAt": "2025-08-01T08:00:00Z",
+    "tags": [
+      "chat",
+      "tiny",
+      "on-device"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "google-gemma-2-9b-it",
+    "displayName": "Gemma 2 9B Instruct",
+    "author": "google",
+    "description": "Google's Gemma 2 9B instruction-tuned. Conservative outputs, good for production.",
+    "contextLengthTokens": 8192,
+    "parameterCountB": 9.24,
+    "format": "gguf",
+    "arch": "gemma2",
+    "capabilities": {
+      "tools": false,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 5443143360,
+        "recommended": true
+      },
+      {
+        "quantization": "Q5_K_M",
+        "format": "gguf",
+        "sizeBytes": 6390000000,
+        "recommended": false
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 9827148288,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 5067000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Gemma 2 9B Instruct\n\nWell-aligned, conservative open chat model from Google DeepMind. 8K context, but high-quality outputs for that window.\n",
+    "downloadCount": 432901,
+    "starCount": 612,
+    "publishedAt": "2025-06-27T08:00:00Z",
+    "tags": [
+      "chat",
+      "production"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "google-gemma-2-27b-it",
+    "displayName": "Gemma 2 27B Instruct",
+    "author": "google",
+    "description": "Larger Gemma 2 \u2014 competitive with 70B-class chat models at lower compute.",
+    "contextLengthTokens": 8192,
+    "parameterCountB": 27.2,
+    "format": "gguf",
+    "arch": "gemma2",
+    "capabilities": {
+      "tools": false,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 16710000000,
+        "recommended": true
+      },
+      {
+        "quantization": "Q6_K",
+        "format": "gguf",
+        "sizeBytes": 22340000000,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 15440000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Gemma 2 27B Instruct\n\nLarger Gemma; per Google's evals comparable to Llama 3 70B on many chat benchmarks at roughly a third the active compute.\n",
+    "downloadCount": 187341,
+    "starCount": 298,
+    "publishedAt": "2025-06-27T08:00:00Z",
+    "tags": [
+      "chat"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "microsoft-phi-3-mini-4k-instruct",
+    "displayName": "Phi-3 Mini 4K Instruct",
+    "author": "microsoft",
+    "description": "3.8B Phi-3 Mini. Trained on heavily-filtered synthetic + web data; punches above its weight.",
+    "contextLengthTokens": 4096,
+    "parameterCountB": 3.82,
+    "format": "gguf",
+    "arch": "phi3",
+    "capabilities": {
+      "tools": false,
+      "vision": false,
+      "reasoning": true,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 2393232384,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 4060866560,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 2176921600,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Phi-3 Mini 4K Instruct\n\nMicrosoft's small reasoning-tuned model. Trained with a heavy focus on textbook-style data \u2014 excellent quality-per-parameter on reasoning and math benchmarks.\n",
+    "downloadCount": 712044,
+    "starCount": 1187,
+    "publishedAt": "2025-04-23T08:00:00Z",
+    "tags": [
+      "reasoning",
+      "tiny"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "microsoft-phi-3.5-mini-instruct",
+    "displayName": "Phi-3.5 Mini Instruct",
+    "author": "microsoft",
+    "description": "Phi-3.5 Mini \u2014 3.8B with 128K context. Improved tool use and multilingual coverage over Phi-3.",
+    "contextLengthTokens": 131072,
+    "parameterCountB": 3.82,
+    "format": "gguf",
+    "arch": "phi3",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": true,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 2393232384,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 4060866560,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 2176921600,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Phi-3.5 Mini Instruct\n\nA refresh of Phi-3 Mini with 128K context and broader multilingual coverage. Strong on instruction following and tool calling.\n",
+    "downloadCount": 421887,
+    "starCount": 698,
+    "publishedAt": "2025-08-20T08:00:00Z",
+    "tags": [
+      "reasoning",
+      "tools",
+      "long-context"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "microsoft-phi-4",
+    "displayName": "Phi-4",
+    "author": "microsoft",
+    "description": "Phi-4 14B \u2014 Microsoft's late-2024 flagship. Heavy emphasis on reasoning, math, and code.",
+    "contextLengthTokens": 16384,
+    "parameterCountB": 14.7,
+    "format": "gguf",
+    "arch": "phi3",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": true,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 8988366848,
+        "recommended": true
+      },
+      {
+        "quantization": "Q5_K_M",
+        "format": "gguf",
+        "sizeBytes": 10508873216,
+        "recommended": false
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 14878000000,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 8255487488,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Phi-4\n\nMicrosoft's late-2024 flagship. Trained with synthetic reasoning data. Phi-4 is 14B parameters with a 16K context window \u2014 small but very strong on reasoning and code evals.\n",
+    "downloadCount": 538219,
+    "starCount": 1083,
+    "publishedAt": "2025-12-12T08:00:00Z",
+    "tags": [
+      "reasoning",
+      "code",
+      "math"
+    ],
+    "staffPick": true
+  },
+  {
+    "id": "mistralai-mistral-7b-instruct-v0.3",
+    "displayName": "Mistral 7B Instruct v0.3",
+    "author": "mistralai",
+    "description": "The canonical 7B chat baseline. v0.3 adds function calling and an expanded 32K-token vocab.",
+    "contextLengthTokens": 32768,
+    "parameterCountB": 7.25,
+    "format": "gguf",
+    "arch": "mistral",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 4368438816,
+        "recommended": true
+      },
+      {
+        "quantization": "Q5_K_M",
+        "format": "gguf",
+        "sizeBytes": 5131410464,
+        "recommended": false
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 7702565376,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 3989000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Mistral 7B Instruct v0.3\n\nThe canonical 7B chat baseline. Many of the finetunes you'll see in the wild build on this. v0.3 adds function-calling and a 32K-token tokenizer.\n",
+    "downloadCount": 1532001,
+    "starCount": 1893,
+    "publishedAt": "2025-05-22T08:00:00Z",
+    "tags": [
+      "chat",
+      "tools"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "mistralai-mistral-nemo-instruct-2407",
+    "displayName": "Mistral Nemo Instruct 2407",
+    "author": "mistralai",
+    "description": "Mistral + NVIDIA collaboration. 12B params, 128K context, multilingual, strong tool calling.",
+    "contextLengthTokens": 131072,
+    "parameterCountB": 12.2,
+    "format": "gguf",
+    "arch": "mistral",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 7477203968,
+        "recommended": true
+      },
+      {
+        "quantization": "Q6_K",
+        "format": "gguf",
+        "sizeBytes": 10056213504,
+        "recommended": false
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 13022000000,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 6920000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Mistral Nemo Instruct 2407\n\nDrop-in 12B chat model with 128K context and strong multilingual coverage. Built jointly with NVIDIA on the Tekken tokenizer.\n",
+    "downloadCount": 489211,
+    "starCount": 624,
+    "publishedAt": "2025-07-18T08:00:00Z",
+    "tags": [
+      "chat",
+      "tools",
+      "multilingual",
+      "long-context"
+    ],
+    "staffPick": true
+  },
+  {
+    "id": "mistralai-mixtral-8x7b-instruct-v0.1",
+    "displayName": "Mixtral 8x7B Instruct v0.1",
+    "author": "mistralai",
+    "description": "Sparse mixture-of-experts: 47B total params, ~13B active per token.",
+    "contextLengthTokens": 32768,
+    "parameterCountB": 46.7,
+    "format": "gguf",
+    "arch": "mixtral",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 26440000000,
+        "recommended": true
+      },
+      {
+        "quantization": "Q5_K_M",
+        "format": "gguf",
+        "sizeBytes": 32230000000,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 24560000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Mixtral 8x7B Instruct v0.1\n\nMixture-of-experts. 47B total / ~13B active per token. Often runs near a dense 30-40B's quality at much lower per-token compute, at the cost of higher VRAM.\n",
+    "downloadCount": 412044,
+    "starCount": 1492,
+    "publishedAt": "2025-01-08T08:00:00Z",
+    "tags": [
+      "chat",
+      "moe",
+      "tools"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "mistralai-codestral-22b-v0.1",
+    "displayName": "Codestral 22B v0.1",
+    "author": "mistralai",
+    "description": "Mistral's code-specialised dense 22B. 80+ languages, fill-in-the-middle, 32K context.",
+    "contextLengthTokens": 32768,
+    "parameterCountB": 22.2,
+    "format": "gguf",
+    "arch": "mistral",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 13340000000,
+        "recommended": true
+      },
+      {
+        "quantization": "Q6_K",
+        "format": "gguf",
+        "sizeBytes": 18250000000,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 12340000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Codestral 22B v0.1\n\nCode-focused Mistral. Fill-in-the-middle + chat in one model. 80+ programming languages.\n",
+    "downloadCount": 287902,
+    "starCount": 542,
+    "publishedAt": "2025-05-29T08:00:00Z",
+    "tags": [
+      "code",
+      "tools"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "deepseek-ai-deepseek-r1-distill-llama-8b",
+    "displayName": "DeepSeek R1 Distill Llama 8B",
+    "author": "deepseek-ai",
+    "description": "DeepSeek R1's reasoning behaviour distilled into a Llama 3.1 8B body. Top open reasoning model in its class.",
+    "contextLengthTokens": 131072,
+    "parameterCountB": 8.0,
+    "format": "gguf",
+    "arch": "llama",
+    "capabilities": {
+      "tools": false,
+      "vision": false,
+      "reasoning": true,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 4920734720,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 8540774912,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 4502618112,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# DeepSeek R1 Distill Llama 8B\n\nReasoning distillation: DeepSeek-R1's behaviour, Llama's compute profile. Emits a `<think>` block before the final answer.\n",
+    "downloadCount": 678331,
+    "starCount": 982,
+    "publishedAt": "2026-01-20T08:00:00Z",
+    "tags": [
+      "reasoning",
+      "thinking"
+    ],
+    "staffPick": true
+  },
+  {
+    "id": "deepseek-ai-deepseek-r1-distill-qwen-14b",
+    "displayName": "DeepSeek R1 Distill Qwen 14B",
+    "author": "deepseek-ai",
+    "description": "R1 reasoning distilled into Qwen 2.5 14B. Among the strongest open reasoning models in the 14B class.",
+    "contextLengthTokens": 32768,
+    "parameterCountB": 14.7,
+    "format": "gguf",
+    "arch": "qwen2",
+    "capabilities": {
+      "tools": false,
+      "vision": false,
+      "reasoning": true,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 8988366848,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 15706898432,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 8255487488,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# DeepSeek R1 Distill Qwen 14B\n\nTop open reasoning 14B. Emits thinking traces before answers.\n",
+    "downloadCount": 411902,
+    "starCount": 712,
+    "publishedAt": "2026-01-20T08:00:00Z",
+    "tags": [
+      "reasoning",
+      "thinking"
+    ],
+    "staffPick": true
+  },
+  {
+    "id": "deepseek-ai-deepseek-coder-v2-lite-instruct",
+    "displayName": "DeepSeek Coder V2 Lite Instruct",
+    "author": "deepseek-ai",
+    "description": "16B MoE code model \u2014 2.4B active params. Fast and capable, 128K context.",
+    "contextLengthTokens": 131072,
+    "parameterCountB": 15.7,
+    "format": "gguf",
+    "arch": "deepseek-v2",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 9530000000,
+        "recommended": true
+      },
+      {
+        "quantization": "Q6_K",
+        "format": "gguf",
+        "sizeBytes": 12830000000,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 8810000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# DeepSeek Coder V2 Lite Instruct\n\nMoE code model \u2014 small active footprint, big effective capacity. 128K context, 86+ programming languages.\n",
+    "downloadCount": 312009,
+    "starCount": 487,
+    "publishedAt": "2025-07-17T08:00:00Z",
+    "tags": [
+      "code",
+      "moe",
+      "tools"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "nousresearch-hermes-3-llama-3.1-8b",
+    "displayName": "Hermes 3 Llama 3.1 8B",
+    "author": "NousResearch",
+    "description": "Nous Research's instruction finetune of Llama 3.1 8B. Strong system-prompt adherence, agentic.",
+    "contextLengthTokens": 131072,
+    "parameterCountB": 8.0,
+    "format": "gguf",
+    "arch": "llama",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 4920734720,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 8540774912,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 4502618112,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Hermes 3 Llama 3.1 8B\n\nNous Research's open finetune of Llama 3.1 8B. Famously good at following system prompts and personas; popular for agentic and roleplay workloads.\n",
+    "downloadCount": 287443,
+    "starCount": 312,
+    "publishedAt": "2025-08-19T08:00:00Z",
+    "tags": [
+      "chat",
+      "tools",
+      "roleplay"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "liquid-lfm2-1.2b",
+    "displayName": "LFM2 1.2B",
+    "author": "liquid",
+    "description": "Liquid AI's first-gen hybrid model for on-device deployment. Non-transformer architecture.",
+    "contextLengthTokens": 32768,
+    "parameterCountB": 1.2,
+    "format": "gguf",
+    "arch": "lfm2",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 1421000000,
+        "recommended": true
+      },
+      {
+        "quantization": "8bit",
+        "format": "mlx",
+        "sizeBytes": 1342177280,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# LFM2 1.2B by LiquidAI\n\nHybrid architecture model intended for local use, by Liquid AI. Non-transformer (Liquid Neural Network) backbone \u2014 designed from the ground up for efficient on-device inference.\n",
+    "downloadCount": 67213,
+    "starCount": 89,
+    "publishedAt": "2025-12-15T08:00:00Z",
+    "tags": [
+      "on-device",
+      "hybrid-arch"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "liquid-lfm2.5-1.2b",
+    "displayName": "LFM2.5 1.2B",
+    "author": "liquid",
+    "description": "LFM2.5 \u2014 Liquid AI's updated hybrid model. On-device focused, agentic-ready, 32K context.",
+    "contextLengthTokens": 32768,
+    "parameterCountB": 1.2,
+    "format": "mlx",
+    "arch": "lfm2",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "8bit",
+        "format": "mlx",
+        "sizeBytes": 1342177280,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 1421000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# LFM2.5 1.2B by LiquidAI\n\nLFM2.5 is a new family of hybrid models designed for on-device deployment. It builds on the LFM2 device-optimized architecture and represents a significant leap forward in building reliable agents on the edge.\n\nSupports a context length of 32k.\n",
+    "downloadCount": 89435,
+    "starCount": 12,
+    "publishedAt": "2026-01-12T08:00:00Z",
+    "tags": [
+      "on-device",
+      "agentic",
+      "hybrid-arch"
+    ],
+    "staffPick": true
+  },
+  {
+    "id": "bigcode-starcoder2-15b",
+    "displayName": "StarCoder 2 15B",
+    "author": "bigcode",
+    "description": "BigCode's flagship code model. Trained on 600+ programming languages, permissive licence.",
+    "contextLengthTokens": 16384,
+    "parameterCountB": 15.2,
+    "format": "gguf",
+    "arch": "starcoder2",
+    "capabilities": {
+      "tools": false,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 9100000000,
+        "recommended": true
+      },
+      {
+        "quantization": "Q6_K",
+        "format": "gguf",
+        "sizeBytes": 12450000000,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 8410000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# StarCoder 2 15B\n\nOpen code model from BigCode (HuggingFace + ServiceNow). Trained on The Stack v2 \u2014 600+ programming languages. Permissive (OpenRAIL-M) licence.\n",
+    "downloadCount": 198044,
+    "starCount": 367,
+    "publishedAt": "2025-02-28T08:00:00Z",
+    "tags": [
+      "code"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "ibm-granite-granite-3.1-8b-instruct",
+    "displayName": "Granite 3.1 8B Instruct",
+    "author": "ibm-granite",
+    "description": "IBM's enterprise-focused Granite 3.1. Apache 2.0, audited training data, 128K context.",
+    "contextLengthTokens": 131072,
+    "parameterCountB": 8.17,
+    "format": "gguf",
+    "arch": "granite",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 4920734720,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 8540774912,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 4502618112,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Granite 3.1 8B Instruct\n\nIBM's open-data, enterprise-tuned chat model. Apache 2.0 \u2014 training data and process documented for enterprise audit.\n",
+    "downloadCount": 142908,
+    "starCount": 198,
+    "publishedAt": "2025-12-18T08:00:00Z",
+    "tags": [
+      "chat",
+      "tools",
+      "enterprise"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "allenai-olmo-2-13b-instruct",
+    "displayName": "OLMo 2 13B Instruct",
+    "author": "allenai",
+    "description": "Allen AI's fully open 13B. Data, code, and weights all permissively licensed.",
+    "contextLengthTokens": 4096,
+    "parameterCountB": 13.7,
+    "format": "gguf",
+    "arch": "olmo2",
+    "capabilities": {
+      "tools": false,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 7870000000,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 14550000000,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 7280000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# OLMo 2 13B Instruct\n\nFully open: training data, training code, intermediate checkpoints, and final weights all released.\n",
+    "downloadCount": 76321,
+    "starCount": 234,
+    "publishedAt": "2025-11-26T08:00:00Z",
+    "tags": [
+      "chat",
+      "fully-open"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "01-ai-yi-1.5-34b-chat",
+    "displayName": "Yi 1.5 34B Chat",
+    "author": "01-ai",
+    "description": "01.AI's large open chat model. Strong Chinese + English coverage, 4K context (Yi-1.5-34B-Chat-16K for long).",
+    "contextLengthTokens": 4096,
+    "parameterCountB": 34.4,
+    "format": "gguf",
+    "arch": "llama",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 20650000000,
+        "recommended": true
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 19100000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Yi 1.5 34B Chat\n\n01.AI's open chat model. Bilingual zh/en. Llama-style architecture.\n",
+    "downloadCount": 187329,
+    "starCount": 264,
+    "publishedAt": "2025-05-12T08:00:00Z",
+    "tags": [
+      "chat",
+      "multilingual"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "cohereforai-c4ai-command-r-08-2024",
+    "displayName": "Command R 08-2024",
+    "author": "CohereForAI",
+    "description": "Cohere's RAG- and tool-tuned 35B. Optimised for grounded responses with inline citations.",
+    "contextLengthTokens": 131072,
+    "parameterCountB": 35.0,
+    "format": "gguf",
+    "arch": "cohere",
+    "capabilities": {
+      "tools": true,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 21210000000,
+        "recommended": true
+      },
+      {
+        "quantization": "Q6_K",
+        "format": "gguf",
+        "sizeBytes": 28770000000,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 19620000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# Command R 08-2024\n\nCohere's RAG-tuned open weights. Excellent citation behaviour, structured for retrieval-augmented generation. CC-BY-NC research licence.\n",
+    "downloadCount": 224019,
+    "starCount": 387,
+    "publishedAt": "2025-08-30T08:00:00Z",
+    "tags": [
+      "chat",
+      "tools",
+      "rag"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "tinyllama-tinyllama-1.1b-chat-v1.0",
+    "displayName": "TinyLlama 1.1B Chat v1.0",
+    "author": "TinyLlama",
+    "description": "1.1B chat baseline. Tiny enough to run anywhere \u2014 useful for testing pipelines and edge demos.",
+    "contextLengthTokens": 2048,
+    "parameterCountB": 1.1,
+    "format": "gguf",
+    "arch": "llama",
+    "capabilities": {
+      "tools": false,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 668000000,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 1170000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# TinyLlama 1.1B Chat v1.0\n\nReally small. Good for smoke tests, RAG pipeline development, and edge experimentation.\n",
+    "downloadCount": 421987,
+    "starCount": 1124,
+    "publishedAt": "2024-12-25T08:00:00Z",
+    "tags": [
+      "chat",
+      "tiny"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "huggingfacetb-smollm2-1.7b-instruct",
+    "displayName": "SmolLM2 1.7B Instruct",
+    "author": "HuggingFaceTB",
+    "description": "HuggingFace's curated tiny chat model. 1.7B params, trained on a heavily-filtered corpus.",
+    "contextLengthTokens": 8192,
+    "parameterCountB": 1.7,
+    "format": "gguf",
+    "arch": "llama",
+    "capabilities": {
+      "tools": false,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": false
+    },
+    "variants": [
+      {
+        "quantization": "Q4_K_M",
+        "format": "gguf",
+        "sizeBytes": 1090000000,
+        "recommended": true
+      },
+      {
+        "quantization": "Q8_0",
+        "format": "gguf",
+        "sizeBytes": 1820000000,
+        "recommended": false
+      },
+      {
+        "quantization": "4bit",
+        "format": "mlx",
+        "sizeBytes": 1010000000,
+        "recommended": false
+      }
+    ],
+    "readmeMarkdown": "# SmolLM2 1.7B Instruct\n\nHuggingFace's well-trained small chat model. Punches well above its size thanks to a curated dataset (FineWeb-Edu, math, code mix).\n",
+    "downloadCount": 198443,
+    "starCount": 612,
+    "publishedAt": "2025-11-04T08:00:00Z",
+    "tags": [
+      "chat",
+      "tiny",
+      "on-device"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "nomic-ai-nomic-embed-text-v1.5",
+    "displayName": "Nomic Embed Text v1.5",
+    "author": "nomic-ai",
+    "description": "Open 137M text embedding model. 8192 context, matryoshka-style truncatable embeddings.",
+    "contextLengthTokens": 8192,
+    "parameterCountB": 0.137,
+    "format": "gguf",
+    "arch": "nomic-bert",
+    "capabilities": {
+      "tools": false,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": true
+    },
+    "variants": [
+      {
+        "quantization": "F16",
+        "format": "gguf",
+        "sizeBytes": 274000000,
+        "recommended": true
+      }
+    ],
+    "readmeMarkdown": "# Nomic Embed Text v1.5\n\nOpen text embedding model with 8192 context. Matryoshka \u2014 embeddings can be truncated from 768 \u2192 256 dims with minimal loss. Use for RAG / search / clustering.\n",
+    "downloadCount": 412987,
+    "starCount": 487,
+    "publishedAt": "2025-02-10T08:00:00Z",
+    "tags": [
+      "embeddings",
+      "rag"
+    ],
+    "staffPick": true
+  },
+  {
+    "id": "baai-bge-large-en-v1.5",
+    "displayName": "BGE Large EN v1.5",
+    "author": "BAAI",
+    "description": "Beijing Academy of AI's high-quality English embedding model. 335M params, 512 context.",
+    "contextLengthTokens": 512,
+    "parameterCountB": 0.335,
+    "format": "gguf",
+    "arch": "bert",
+    "capabilities": {
+      "tools": false,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": true
+    },
+    "variants": [
+      {
+        "quantization": "F16",
+        "format": "gguf",
+        "sizeBytes": 670000000,
+        "recommended": true
+      }
+    ],
+    "readmeMarkdown": "# BGE Large EN v1.5\n\nWidely-used English embedding model from BAAI. Strong MTEB scores; the default for many production RAG stacks.\n",
+    "downloadCount": 689412,
+    "starCount": 1287,
+    "publishedAt": "2024-09-04T08:00:00Z",
+    "tags": [
+      "embeddings"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "mixedbread-ai-mxbai-embed-large-v1",
+    "displayName": "mxbai-embed-large v1",
+    "author": "mixedbread-ai",
+    "description": "Mixedbread's 335M English embedding model. Strong MTEB performance, Apache 2.0.",
+    "contextLengthTokens": 512,
+    "parameterCountB": 0.335,
+    "format": "gguf",
+    "arch": "bert",
+    "capabilities": {
+      "tools": false,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": true
+    },
+    "variants": [
+      {
+        "quantization": "F16",
+        "format": "gguf",
+        "sizeBytes": 670000000,
+        "recommended": true
+      }
+    ],
+    "readmeMarkdown": "# mxbai-embed-large v1\n\nMixedbread AI's open English embedding model. Apache 2.0. Outperforms many larger embedding models on MTEB.\n",
+    "downloadCount": 187321,
+    "starCount": 312,
+    "publishedAt": "2025-03-15T08:00:00Z",
+    "tags": [
+      "embeddings"
+    ],
+    "staffPick": false
+  },
+  {
+    "id": "sentence-transformers-all-minilm-l6-v2",
+    "displayName": "all-MiniLM-L6-v2",
+    "author": "sentence-transformers",
+    "description": "Tiny 384-dim embedding model \u2014 the default baseline in many RAG starter stacks.",
+    "contextLengthTokens": 256,
+    "parameterCountB": 0.023,
+    "format": "gguf",
+    "arch": "bert",
+    "capabilities": {
+      "tools": false,
+      "vision": false,
+      "reasoning": false,
+      "embeddings": true
+    },
+    "variants": [
+      {
+        "quantization": "F16",
+        "format": "gguf",
+        "sizeBytes": 91000000,
+        "recommended": true
+      }
+    ],
+    "readmeMarkdown": "# all-MiniLM-L6-v2\n\nVery small embedding model. Fast, good enough as a baseline. 22M params, 384 dimensions.\n",
+    "downloadCount": 1209883,
+    "starCount": 2014,
+    "publishedAt": "2024-06-12T08:00:00Z",
+    "tags": [
+      "embeddings",
+      "tiny"
+    ],
+    "staffPick": false
+  }
+]

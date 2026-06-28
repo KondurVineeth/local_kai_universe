@@ -1,0 +1,1 @@
+export { ChatSecondarySidebar } from './ChatSecondarySidebar';

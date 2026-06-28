@@ -1,0 +1,1 @@
+export { RightPanelPlaceholder } from './RightPanelPlaceholder';

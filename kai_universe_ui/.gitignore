@@ -1,0 +1,15 @@
+node_modules/
+dist/
+out/
+.env
+.env.local
+.DS_Store
+*.log
+.vscode/
+.idea/
+coverage/
+*.tsbuildinfo
+
+# Design system reference renders — regenerable from SVGs, not source-of-truth
+docs/design-system/**/png/
+.claude/

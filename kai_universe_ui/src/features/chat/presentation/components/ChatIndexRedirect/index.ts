@@ -1,0 +1,1 @@
+export { ChatIndexRedirect } from './ChatIndexRedirect';

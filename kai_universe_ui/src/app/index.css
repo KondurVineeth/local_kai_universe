@@ -1,0 +1,131 @@
+@import './code-highlight.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Universal border-color override — hardcoded Infinity neutral-100 (#262626).
+ *
+ * NOT using var(--color-border-default) because :root custom properties have
+ * been unreliable in this Electron + electron-vite setup — getComputedStyle
+ * returns '' for them on the running renderer despite being declared inline
+ * in index.html. Hardcoding the hex sidesteps the resolution problem.
+ *
+ * If Infinity's neutral-100 changes: update both this hex and the matching
+ * value in tailwind.config.ts (INFINITY.neutral100).
+ */
+@layer base {
+  *, ::before, ::after {
+    border-color: #262626;
+  }
+
+  /*
+   * Global scrollbar styling — slim, dark, with a hover-highlight thumb.
+   * Replaces the chunky default macOS / Chromium scrollbar across every
+   * scrollable surface (chat feed, right rail, sidebar, textarea, popovers).
+   * Firefox honors `scrollbar-width` + `scrollbar-color`; Webkit/Blink
+   * honors the ::-webkit-scrollbar pseudos.
+   */
+  *, textarea, input {
+    scrollbar-width: thin;
+    scrollbar-color: #404040 transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #404040;
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #525252;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+/*
+ * Animated loading-border for the global model picker.
+ *
+ * Pattern: the .loading-border element paints a conic-gradient as its
+ * background; an absolutely-positioned ::after sits on top and re-paints the
+ * inner area with `bg-bg-raised`, leaving only the outer 1px ring visible.
+ * The conic angle is animated via @property so the gradient rotates without
+ * a transform (no rotation bounding-box issues, no jitter on rounded corners).
+ *
+ * `.loading-border` is the slow ramp shown during a 3–5s model load.
+ * `.loading-border-fast` runs at half the period for the ~600–900ms eject
+ * unloading animation. Both consume `border-radius` from a parent class so
+ * they stay in lockstep with the picker container's rounding.
+ *
+ * The parent must keep its border-radius (the same rounding is `inherit`-ed
+ * by the ::after mask) and place its real children inside a child element —
+ * direct text nodes will be obscured by the ::after mask.
+ */
+@property --loading-border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@layer components {
+  @keyframes loading-border-spin {
+    to {
+      --loading-border-angle: 360deg;
+    }
+  }
+
+  .loading-border,
+  .loading-border-fast {
+    position: relative;
+    /* The 1px padding becomes the visible border thickness. */
+    padding: 1px;
+    background: conic-gradient(
+      from var(--loading-border-angle),
+      transparent 0deg,
+      transparent 240deg,
+      #4f7cff 300deg,
+      #8eb4ff 330deg,
+      #4f7cff 360deg
+    );
+    animation: loading-border-spin 1.6s linear infinite;
+  }
+
+  .loading-border-fast {
+    animation-duration: 0.8s;
+  }
+
+  /*
+   * One-shot scale + glow pulse for the downloads-indicator badge when
+   * `activeCount` transitions from 0 → ≥1 (UX-SHELL-009). Plays once and
+   * stops; the parent component re-keys the element so the keyframe runs
+   * cleanly on each new transition.
+   */
+  @keyframes badge-pop {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 var(--color-primary-surface-high);
+    }
+    50% {
+      transform: scale(1.25);
+      box-shadow: 0 0 6px 2px var(--color-primary-surface-high);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 var(--color-primary-surface-high);
+    }
+  }
+  .badge-pop {
+    animation: badge-pop 200ms ease-out;
+  }
+}
+
