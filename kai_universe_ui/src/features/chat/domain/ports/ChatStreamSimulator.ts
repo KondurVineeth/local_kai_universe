@@ -1,6 +1,7 @@
 import type { MessageChunk } from './MessageChunk';
 import type { Message } from '../entities/Message';
 import type { ThreadId } from '../value-objects/ThreadId';
+import type { ModelId } from '@shared/domain/model/value-objects/ModelId';
 
 // Streams a simulated assistant response chunk-by-chunk. Implementations
 // (FixtureChatStreamSimulator) pick a canned reply, split it into chunks,
@@ -71,6 +72,7 @@ export interface SimulateOptions {
   // length cap, structured output, system prompt, integrations, notes)
   // each have at least one observable effect on the reply.
   readonly config?: SimulateInferenceConfig;
+  readonly model?: ModelId;
 }
 
 export interface ChatStreamSimulator {

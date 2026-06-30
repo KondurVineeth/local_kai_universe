@@ -1,7 +1,7 @@
 import { simulateRequestThunk } from '@features/local-server';
 import { modelPickerOpenRequested, selectLoadedModelId } from '@features/shell';
 import { newId } from '@shared/lib/newId';
-
+import type { RootState } from '@shared/store/hooks';
 import {
   appendChunk,
   appendMessage,
@@ -32,7 +32,7 @@ import type { Iso8601 } from '@shared/domain/primitives/Iso8601';
 
 type ChatThunk<TReturn = void> = ThunkAction<
   TReturn,
-  { chat: ChatState; chatConfig: ChatConfigState },
+  RootState,
   Container,
   AnyAction
 >;
@@ -117,7 +117,7 @@ function isThreadStreaming(messages: readonly Message[]): boolean {
 // verbatim in its "(used: …)" footer. `contextWindowTokens` is resolved
 // from the loaded model fixture by the caller (see resolveContextWindow).
 function buildSimulateConfig(
-  state: { chat: ChatState; chatConfig: ChatConfigState },
+  state: RootState,
   threadId: ThreadId,
   contextWindowTokens: number,
 ): SimulateInferenceConfig {
@@ -336,12 +336,24 @@ export function continueThunk(
     let lastChunkDone = false;
     let stopReasonFromSim: string | undefined;
     const contextWindow = await resolveContextWindow(getState, container);
-    const simulateConfig = buildSimulateConfig(getState(), threadId, contextWindow);
+    const simulateConfig = buildSimulateConfig(
+      getState(),
+      threadId,
+      contextWindow,
+    );
+
+    const modelId = selectLoadedModelId(getState());
+
     try {
       for await (const chunk of container.chat.chatStreamSimulator.simulate(
         threadId,
         messages,
-        { signal: controller.signal, continuation: true, config: simulateConfig },
+        {
+          signal: controller.signal,
+          continuation: true,
+          config: simulateConfig,
+          model: modelId ?? 'google/gemma-3-1b-it',
+        },
       )) {
         if (controller.signal.aborted) break;
         if ((chunk.kind ?? 'body') !== 'body') continue;

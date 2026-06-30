@@ -1,6 +1,5 @@
 import httpx
 
-
 class GatewayChatClient:
 
     def __init__(
@@ -24,4 +23,10 @@ class GatewayChatClient:
 
             response.raise_for_status()
 
-            return response.json()
+            data = response.json()
+
+            print("\n==============================")
+            print(data)
+            print("==============================\n")
+
+            return data

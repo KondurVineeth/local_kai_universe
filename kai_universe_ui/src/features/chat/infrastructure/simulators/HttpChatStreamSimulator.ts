@@ -1,8 +1,5 @@
-import type {
-  ChatStreamSimulator,
-  SimulateOptions,
-} from '../../domain/ports/ChatStreamSimulator';
-
+import type {ChatStreamSimulator,SimulateOptions,} from '../../domain/ports/ChatStreamSimulator';
+import type { MessageId } from '../../domain/value-objects/MessageId';
 import type { MessageChunk } from '../../domain/ports/MessageChunk';
 import type { Message } from '../../domain/entities/Message';
 import type { ThreadId } from '../../domain/value-objects/ThreadId';
@@ -19,6 +16,7 @@ export class HttpChatStreamSimulator implements ChatStreamSimulator {
       role: message.role,
       content: message.content,
     }));
+    const placeholderId = '' as MessageId;
 
     const response = await fetch(API_URL, {
       method: 'POST',
@@ -26,29 +24,34 @@ export class HttpChatStreamSimulator implements ChatStreamSimulator {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-    model: "google/gemma-2-2b-it",   // use any model that is working
-    messages,
-    max_completion_tokens: 1024,
-    temperature: 0,
-    top_p: 1,
-    stream: false,
-}),
+        model: _options?.model ?? 'google/gemma-3-1b-it',   // use any model that is working
+        messages,
+        max_completion_tokens: 1024,
+        temperature: 0,
+        top_p: 1,
+        stream: false,
+      }),
     });
 
     if (!response.ok) {
-      throw new Error('Failed to call backend');
+      const errorText = await response.text();
+      throw new Error(`Backend request failed (${response.status}): ${errorText}`);
     }
 
     const result = await response.json();
 
     yield {
-      kind: 'content',
-      delta: result.content,
+      threadId: _threadId,
+      messageId: placeholderId,
+      kind: 'body',
+      delta: result.choices?.[0]?.message?.content ?? '',
       done: false,
     };
 
     yield {
-      kind: 'content',
+      threadId: _threadId,
+      messageId: placeholderId,
+      kind: 'body',
       delta: '',
       done: true,
     };

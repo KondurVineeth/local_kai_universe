@@ -15,9 +15,9 @@ class ChatChoiceResponse(BaseModel):
 
 
 class ChatUsageResponse(BaseModel):
-    prompt_tokens: int
-    completion_tokens: int
-    total_tokens: int
+    prompt_tokens: int | None = None
+    completion_tokens: int | None = None
+    total_tokens: int | None = None
 
 
 class ChatResponse(BaseModel):
