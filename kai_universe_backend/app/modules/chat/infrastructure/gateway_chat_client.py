@@ -1,4 +1,6 @@
+import json
 import httpx
+
 
 class GatewayChatClient:
 
@@ -12,6 +14,10 @@ class GatewayChatClient:
         self,
         payload: dict,
     ):
+        print("\n========== OUTGOING REQUEST ==========")
+        print(json.dumps(payload, indent=4))
+        print("======================================\n")
+
         async with httpx.AsyncClient(
             timeout=None,
         ) as client:
@@ -25,8 +31,8 @@ class GatewayChatClient:
 
             data = response.json()
 
-            print("\n==============================")
-            print(data)
-            print("==============================\n")
+            print("\n========== INCOMING RESPONSE ==========")
+            print(json.dumps(data, indent=4))
+            print("=======================================\n")
 
             return data

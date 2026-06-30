@@ -16,8 +16,13 @@ class ChatRequest(BaseModel):
     messages: List[ChatMessageRequest]
 
     max_completion_tokens: int = 1024
+
     temperature: float = 0.0
     top_p: float = 1.0
+
+    top_k: int = 20
+    repetition_penalty: float = 1.1
+    seed: int | None = None
 
     stream: bool = False
     stream_options: Optional[StreamOptionsRequest] = None

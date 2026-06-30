@@ -345,6 +345,9 @@ export function continueThunk(
     const modelId = selectLoadedModelId(getState());
 
     try {
+      if (!modelId) {
+        throw new Error('No model loaded.');
+    }
       for await (const chunk of container.chat.chatStreamSimulator.simulate(
         threadId,
         messages,
@@ -557,6 +560,8 @@ async function streamAssistantResponse(
       reasoningEnabled: options.reasoningEnabled,
       signal: controller.signal,
       config: simulateConfig,
+      inferenceConfig: cfg,
+
     })) {
       if (controller.signal.aborted) break;
       const kind = chunk.kind ?? 'body';
