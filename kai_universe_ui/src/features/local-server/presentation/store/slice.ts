@@ -29,10 +29,14 @@ export interface LoadConfig {
 
 // Persisted Inference-tab knobs.
 export interface InferenceConfig {
-  systemPrompt: string;
-  temperature: number;
-  topK: number;
-  draftModelId: string | null;
+    systemPrompt: string;
+    temperature: number;
+    topK: number;
+    topP: number;
+    repetitionPenalty: number;
+    presencePenalty: number;
+    minP: number;
+    draftModelId: string | null;
 }
 
 export const DEFAULT_LOAD_CONFIG: LoadConfig = {
@@ -47,6 +51,10 @@ export const DEFAULT_INFERENCE_CONFIG: InferenceConfig = {
   systemPrompt: '',
   temperature: 1,
   topK: 64,
+  topP: 0.95,
+  repetitionPenalty: 1.1,
+  presencePenalty: 0,
+  minP: 0.05,
   draftModelId: null,
 };
 

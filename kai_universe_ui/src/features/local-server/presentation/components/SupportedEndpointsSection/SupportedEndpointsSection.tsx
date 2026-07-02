@@ -1,18 +1,19 @@
 import { ArrowSquareOut, CaretDown, Info, Play } from '@phosphor-icons/react';
 import { useNavigate } from 'react-router-dom';
-import type { Model } from '@shared/domain/model/entities/Model';
 import { Button, Icon, Tooltip } from '@shared/ds/primitives';
 import { cn } from '@shared/lib/cn';
 import { useAppDispatch, useAppSelector } from '@shared/store/hooks';
 import { useContainer } from '@shared/container-context';
 import { selectSelectedModelId } from "../../../../discover/presentation/store/selectors";
-import { startModelDownloadThunk } from "../../../../discover/presentation/store/thunks";
 import { useModels } from "../../../../discover/presentation/hooks/useModels";
 import { listEndpoints } from '../../../application/use-cases/listEndpoints';
+import type { InferenceConfig } from "../../store/slice";
+import type { Model } from "@shared/domain/model/entities/Model";
 import {
   selectEndpointsCollapsed,
   selectEndpointsTab,
   selectServerStatus,
+  selectInferenceConfig,
 } from '../../store/selectors';
 import {
     apiResponseReceived,
@@ -20,9 +21,12 @@ import {
     endpointsTabSet,
 } from '../../store/slice';
 import { simulateRequestThunk } from '../../store/thunks';
-
+import { useLoadedModels } from "../../hooks";
 import type { Endpoint, HttpMethod } from '../../../domain/entities/Endpoint';
 import type { EndpointsTab } from '../../store/slice';
+import type {
+    LoadedModel,
+} from "@shared/infrastructure/repositories/HttpLocalServerService";
 
 // Realistic synthetic latency + response notes per endpoint pattern so the
 // "Try it" button emits log lines that look like real ZL Universe traffic.
@@ -151,7 +155,9 @@ async function executeEndpoint(
     endpoint: Endpoint,
     container: ReturnType<typeof useContainer>,
     dispatch: ReturnType<typeof useAppDispatch>,
-    selectedModel: Model | undefined,
+    selectedDiscoverModel: Model | undefined,
+    selectedLoadedModel: LoadedModel | undefined,
+    inferenceConfig: InferenceConfig,
 ): Promise<boolean> {
   switch (endpoint.path) {
 
@@ -160,8 +166,10 @@ async function executeEndpoint(
     // -----------------------------
 
     case "/api/v1/models": {
+    try {
         const models =
-          await container.localServer.localServerService.getPublicModels();
+            await container.localServer.localServerService.getPublicModels();
+
         dispatch(
             apiResponseReceived({
                 endpoint: endpoint.path,
@@ -170,61 +178,191 @@ async function executeEndpoint(
                 body: models,
             }),
         );
-      return true;
-    }
-    case "/api/v1/chat": {
-        console.log("ZL Chat");
+
         return true;
-    }
-    case "/api/v1/models/load": {
-    if (!selectedModel) {
+    } catch (error) {
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 500,
+                body: {
+                    error:
+                        error instanceof Error
+                            ? error.message
+                            : "Failed to fetch models",
+                },
+            }),
+        );
+
         return false;
     }
+}
+    case "/api/v1/chat": {
+    if (!selectedLoadedModel) {
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 400,
+                body: {
+                    error: "No model selected.",
+                },
+            }),
+        );
+        return false;
+    }
+    try {
+        const response =
+            await container.localServer.localServerService.chat({
+                model: selectedLoadedModel.model_id,
+                messages: [
+                    {
+                        role: "system",
+                        content:inferenceConfig.systemPrompt || "Follow the instructions carefully and answer the question.",
+                    },
+                    {
+                        role: "user",
+                        content: "Describe India.",
+                    },
+                ],
+                max_completion_tokens: 1024,
+                temperature: inferenceConfig.temperature,
+                top_p: 0.95,
+                top_k: inferenceConfig.topK,
+                repetition_penalty: 1.1,
+                seed: null,
+                stream: false,
+                stream_options: null,
+                n: 1,
+                store: false,
+            });
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 200,
+                body: response,
+            }),
+        );
+        return true;
+    } catch (error) {
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 500,
+                body: {
+                    error:
+                        error instanceof Error
+                            ? error.message
+                            : "Unknown error",
+                },
+            }),
+        );
+        return false;
+    }
+}
 
+  case "/api/v1/models/load": {
+    console.log("Entered /models/load");
+    console.log("selectedModel =", selectedDiscoverModel);
+    if (!selectedDiscoverModel) {
+        return false;
+    }
     await container.localServer.localServerService.loadModel(
-        selectedModel.id,
-        selectedModel.hfRepository,
+        selectedDiscoverModel.id,
+        selectedDiscoverModel.hfRepository,
     );
-
     dispatch(
         apiResponseReceived({
             endpoint: endpoint.path,
             method: endpoint.method,
             status: 200,
             body: {
-                message: `Loaded ${selectedModel.displayName}`,
+                message: `Loaded ${selectedDiscoverModel.displayName}`,
             },
         }),
-);
+  );
     return true;
 }
-    case "/api/v1/models/download": {
-      if (!selectedModel) {
-          return false;
-      }
-      const variant =
-          selectedModel.variants.find(v => v.recommended)
-          ?? selectedModel.variants[0];
-      if (!variant) {
-          return false;
-      }
-      await dispatch(
-          startModelDownloadThunk(
-              selectedModel.id,
-              selectedModel.hfRepository,
-              variant.quantization,
-              Number(variant.sizeBytes),
-          ),
-      );
-      return true;
-  }
-    case "/api/v1/models/download/status/:job_id": {
 
+  case "/api/v1/models/download": {
+    if (!selectedDiscoverModel) {
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 400,
+                body: {
+                    error: "No model selected.",
+                },
+            }),
+        );
+        return false;
+    }
+    const variant =
+        selectedDiscoverModel.variants.find(
+            variant => variant.recommended,
+        ) ??
+        selectedDiscoverModel.variants[0];
+    if (!variant) {
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 400,
+                body: {
+                    error: "No downloadable variant found.",
+                },
+            }),
+        );
+        return false;
+    }
+    try {
+        const download =
+            await container.downloadRepository.enqueue({
+                modelId:
+                    selectedDiscoverModel.id,
+                hfRepository:
+                    selectedDiscoverModel.hfRepository,
+                quantization:
+                    variant.quantization,
+                sizeBytes:
+                    variant.sizeBytes,
+            });
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 200,
+                body: download,
+            }),
+        );
+        return true;
+    } catch (error) {
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 500,
+                body: {
+                    error:
+                        error instanceof Error
+                            ? error.message
+                            : "Failed to start download.",
+                },
+            }),
+        );
+        return false;
+    }
+}
+
+    case "/api/v1/models/download/status/:job_id": {
     const downloads =
         await container.downloadRepository.list();
     console.log("Downloads:", downloads);
     if (downloads.length === 0) {
-
         dispatch(
             apiResponseReceived({
                 endpoint: endpoint.path,
@@ -235,10 +373,8 @@ async function executeEndpoint(
                 },
             }),
         );
-
         return true;
     }
-
     const currentDownload =
         downloads.find(
             download => download.status === "downloading",
@@ -248,24 +384,19 @@ async function executeEndpoint(
     if (!currentDownload) {
         return false;
     }
-
     const download =
       await container.downloadRepository.findById(
         currentDownload.id,
     );
-
     await container.localServer.localServerService.addLog(
         "INFO",
         "GET /api/v1/models/download/status/:job_id",
     );
-
     await container.localServer.localServerService.addLog(
         "INFO",
         JSON.stringify(download, null, 2),
     );
-    console.log("Download Details:", download);
     if (!download) {
-
         dispatch(
             apiResponseReceived({
                 endpoint: endpoint.path,
@@ -276,12 +407,8 @@ async function executeEndpoint(
                 },
             }),
         );
-
         return true;
     }
-
-    console.log("Dispatching API response...");
-
     dispatch(
         apiResponseReceived({
             endpoint: endpoint.path,
@@ -294,19 +421,15 @@ async function executeEndpoint(
             },
         }),
     );
-
-    console.log("Dispatch complete");
-
     return true;
 }
+
     // -----------------------------
     // OpenAI Compatible
     // -----------------------------
     case "/v1/models": {
-
     const models =
         await container.localServer.localServerService.getPublicModels();
-
     dispatch(
         apiResponseReceived({
             endpoint: endpoint.path,
@@ -315,32 +438,271 @@ async function executeEndpoint(
             body: models,
         }),
     );
-
     return true;
 }
     case "/v1/chat/completions": {
-        console.log("OpenAI Chat Completions");
-        return true;
+
+    if (!selectedLoadedModel) {
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 400,
+                body: {
+                    error: "No model selected.",
+                },
+            }),
+        );
+
+        return false;
     }
+
+    try {
+
+        const response =
+            await container.localServer.localServerService.chat({
+                model: selectedLoadedModel.model_id,
+
+                messages: [
+                    {
+                        role: "system",
+                        content: "You are a teacher explaining to a class.",
+                    },
+                    {
+                        role: "user",
+                        content: "Where is Bangalore?",
+                    },
+                ],
+
+                max_completion_tokens: 1024,
+
+                temperature: 0.6,
+
+                top_p: 0.95,
+
+                top_k: 20,
+
+                repetition_penalty: 1.1,
+
+                seed: null,
+
+                stream: false,
+
+                stream_options: null,
+
+                n: 1,
+
+                store: false,
+            });
+
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 200,
+                body: response,
+            }),
+        );
+
+        return true;
+
+    } catch (error) {
+
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 500,
+                body: {
+                    error:
+                        error instanceof Error
+                            ? error.message
+                            : "Unknown error",
+                },
+            }),
+        );
+
+        return false;
+    }
+}
+    case "/v1/embeddings": {
+
+    try {
+
+        const response =
+            await container.localServer.localServerService.embeddings({
+                model: "sentence-transformers/all-MiniLM-L6-v2",
+                input: "Capital of India is?",
+            });
+
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 200,
+                body: response,
+            }),
+        );
+
+        return true;
+
+    } catch (error) {
+
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 500,
+                body: {
+                    error:
+                        error instanceof Error
+                            ? error.message
+                            : "Unknown error",
+                },
+            }),
+        );
+
+        return false;
+    }
+}
+
     case "/v1/completions": {
-        console.log("OpenAI Completions");
-        return true;
+
+    if (!selectedLoadedModel) {
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 400,
+                body: {
+                    error: "No model selected.",
+                },
+            }),
+        );
+
+        return false;
     }
+
+    try {
+
+        const response =
+            await container.localServer.localServerService.completions({
+                model: selectedLoadedModel.model_id,
+                prompt: "The capital of India is",
+                max_tokens: 1024,
+                temperature: 0.6,
+                top_p: 0.95,
+                stream: false,
+            });
+
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 200,
+                body: response,
+            }),
+        );
+
+        return true;
+
+    } catch (error) {
+
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 500,
+                body: {
+                    error:
+                        error instanceof Error
+                            ? error.message
+                            : "Unknown error",
+                },
+            }),
+        );
+
+        return false;
+    }
+}
     case "/v1/responses": {
         console.log("OpenAI Responses");
         return true;
     }
-    case "/v1/embeddings": {
-        console.log("OpenAI Embeddings");
-        return true;
-    }
+
     // -----------------------------
     // Anthropic Compatible
     // -----------------------------
     case "/v1/messages": {
-        console.log("Anthropic Messages");
-        return true;
+
+    if (!selectedLoadedModel) {
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 400,
+                body: {
+                    error: "No model selected.",
+                },
+            }),
+        );
+
+        return false;
     }
+
+    try {
+
+        const response =
+            await container.localServer.localServerService.chat({
+                model: selectedLoadedModel.model_id,
+                messages: [
+                    {
+                        role: "user",
+                        content: "Where is Bangalore?",
+                    },
+                ],
+                max_completion_tokens: 1024,
+                temperature: 0.6,
+                top_p: 0.95,
+                top_k: 20,
+                repetition_penalty: 1.1,
+                seed: null,
+                stream: false,
+                stream_options: null,
+                n: 1,
+                store: false,
+            });
+
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 200,
+                body: response,
+            }),
+        );
+
+        return true;
+
+    } catch (error) {
+
+        dispatch(
+            apiResponseReceived({
+                endpoint: endpoint.path,
+                method: endpoint.method,
+                status: 500,
+                body: {
+                    error:
+                        error instanceof Error
+                            ? error.message
+                            : "Unknown error",
+                },
+            }),
+        );
+
+        return false;
+    }
+}
     default:
         break;
   }
@@ -348,33 +710,57 @@ async function executeEndpoint(
 }
 
 function EndpointRow({ endpoint }: { readonly endpoint: Endpoint }) {
+  const { models } = useModels();
   const dispatch = useAppDispatch();
   const container = useContainer();
-  const { models } = useModels();
+  const selectedModelId =
+    useAppSelector(selectSelectedModelId);
+  const selectedDiscoverModel =
+    models.find(
+        model => model.id === selectedModelId,
+    );
+  const loadedModels = useLoadedModels();
+  const inferenceConfig =
+    useAppSelector(selectInferenceConfig);
+  const selectedModel =
+    loadedModels.find(
+        model => model.status === "READY",
+    );
+  const serverStatus =
+    useAppSelector(selectServerStatus);
 
-  const selectedModelId = useAppSelector(selectSelectedModelId);
+  const canTry =
+    serverStatus === "running";
 
-  const selectedModel = models.find(
-    (model: Model) => model.id === selectedModelId,
-  );
-  const serverStatus = useAppSelector(selectServerStatus);
-  const canTry = serverStatus === 'running';
+  // -----------------------------
+  // DEBUG
+  // -----------------------------
   const onTry = async () => {
     if (!canTry) return;
 
     const handled =
-        await executeEndpoint(endpoint, container, dispatch, selectedModel);
+      await executeEndpoint(
+        endpoint,
+        container,
+        dispatch,
+        selectedDiscoverModel,
+        selectedModel,
+        inferenceConfig,
+      );
+
+    console.log("Handled:", handled);
 
     if (handled) return;
 
-    const sim = simulatedResponseFor(endpoint);
+    const sim =
+      simulatedResponseFor(endpoint);
 
     dispatch(
-        simulateRequestThunk({
-            method: endpoint.method,
-            path: endpoint.path,
-            ...sim,
-        }),
+      simulateRequestThunk({
+        method: endpoint.method,
+        path: endpoint.path,
+        ...sim,
+      }),
     );
   };
 
@@ -382,15 +768,23 @@ function EndpointRow({ endpoint }: { readonly endpoint: Endpoint }) {
     <div className="flex items-center gap-3 rounded-md px-2 py-2 hover:bg-bg-raised/40">
       <span
         className={cn(
-          'w-12 shrink-0 rounded px-1.5 py-0.5 text-center font-mono text-[10px] font-semibold',
+          "w-12 shrink-0 rounded px-1.5 py-0.5 text-center font-mono text-[10px] font-semibold",
           METHOD_CLASSES[endpoint.method],
         )}
       >
         {endpoint.method}
       </span>
-      <span className="flex-1 font-mono text-xs text-fg-default">{endpoint.path}</span>
+
+      <span className="flex-1 font-mono text-xs text-fg-default">
+        {endpoint.path}
+      </span>
+
       <Tooltip
-        content={canTry ? 'Simulate a request to this endpoint' : 'Start the server to try endpoints'}
+        content={
+          canTry
+            ? "Simulate a request to this endpoint"
+            : "Start the server to try endpoints"
+        }
         side="left"
       >
         <Button
@@ -404,7 +798,11 @@ function EndpointRow({ endpoint }: { readonly endpoint: Endpoint }) {
           <Icon icon={Play} size="xs" weight="fill" />
         </Button>
       </Tooltip>
-      <Tooltip content={endpoint.description} side="left">
+
+      <Tooltip
+        content={endpoint.description}
+        side="left"
+      >
         <span className="cursor-help text-fg-subtle">
           <Icon icon={Info} size="xs" />
         </span>

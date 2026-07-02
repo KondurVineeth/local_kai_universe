@@ -72,7 +72,47 @@ export function InferenceTab({ model }: { readonly model: Model }) {
         />
       </CollapsibleSection>
       <CollapsibleSection icon={<Icon icon={SlidersHorizontal} size="xs" className="text-fg-muted" />} title="Sampling" defaultOpen>
-        <SamplingContent topK={draft.topK} onTopKChange={(v) => patch({ topK: v })} />
+        <SamplingContent
+    topK={draft.topK}
+    onTopKChange={(v) =>
+        setDraft({
+            ...draft,
+            topK: v,
+        })
+    }
+
+    topP={draft.topP}
+    onTopPChange={(v) =>
+        setDraft({
+            ...draft,
+            topP: v,
+        })
+    }
+
+    repetitionPenalty={draft.repetitionPenalty}
+    onRepetitionPenaltyChange={(v) =>
+        setDraft({
+            ...draft,
+            repetitionPenalty: v,
+        })
+    }
+
+    presencePenalty={draft.presencePenalty}
+    onPresencePenaltyChange={(v) =>
+        setDraft({
+            ...draft,
+            presencePenalty: v,
+        })
+    }
+
+    minP={draft.minP}
+    onMinPChange={(v) =>
+        setDraft({
+            ...draft,
+            minP: v,
+        })
+    }
+/>
       </CollapsibleSection>
       <CollapsibleSection icon={<Icon icon={Cube} size="xs" className="text-fg-muted" />} title="Structured Output" defaultOpen>
         <StructuredOutputContent />
@@ -250,29 +290,46 @@ function SettingsContent({
 function SamplingContent({
   topK,
   onTopKChange,
+  topP,
+  onTopPChange,
+  repetitionPenalty,
+  onRepetitionPenaltyChange,
+  presencePenalty,
+  onPresencePenaltyChange,
+  minP,
+  onMinPChange,
 }: {
   readonly topK: number;
   readonly onTopKChange: (v: number) => void;
-}) {
+
+  readonly topP: number;
+  readonly onTopPChange: (v: number) => void;
+
+  readonly repetitionPenalty: number;
+  readonly onRepetitionPenaltyChange: (v: number) => void;
+
+  readonly presencePenalty: number;
+  readonly onPresencePenaltyChange: (v: number) => void;
+
+  readonly minP: number;
+  readonly onMinPChange: (v: number) => void;
+}){
   const [repeatOn, setRepeatOn] = useState(true);
-  const [repeat, setRepeat] = useState(1.1);
   const [presenceOn, setPresenceOn] = useState(false);
   const [topPOn, setTopPOn] = useState(true);
-  const [topP, setTopP] = useState(0.95);
   const [minPOn, setMinPOn] = useState(true);
-  const [minP, setMinP] = useState(0.05);
 
   return (
     <div className="flex flex-col gap-3">
       <InlineRow label="Top K Sampling">
         <NumInput value={topK} onChange={onTopKChange} />
       </InlineRow>
-      <ToggleableSliderRow label="Repeat Penalty" enabled={repeatOn} onToggle={setRepeatOn} value={repeat} min={1} max={2} step={0.01} format={(n) => n.toFixed(2)} onChange={setRepeat} />
+      <ToggleableSliderRow label="Repeat Penalty" enabled={repeatOn} onToggle={setRepeatOn} value={repetitionPenalty} min={1} max={2} step={0.01} format={(n) => String(n)} onChange={onRepetitionPenaltyChange} />
       <InlineRow label="Presence Penalty">
         <input type="checkbox" checked={presenceOn} onChange={(e) => setPresenceOn(e.target.checked)} className="h-3.5 w-3.5 rounded accent-accent" aria-label="Presence penalty" />
       </InlineRow>
-      <ToggleableSliderRow label="Top P Sampling" enabled={topPOn} onToggle={setTopPOn} value={topP} min={0} max={1} step={0.01} format={(n) => n.toFixed(2)} onChange={setTopP} />
-      <ToggleableSliderRow label="Min P Sampling" enabled={minPOn} onToggle={setMinPOn} value={minP} min={0} max={1} step={0.01} format={(n) => n.toFixed(2)} onChange={setMinP} />
+      <ToggleableSliderRow label="Top P Sampling" enabled={topPOn} onToggle={setTopPOn} value={topP} min={0} max={1} step={0.01} format={(n) => String(n)} onChange={onTopPChange} />
+      <ToggleableSliderRow label="Min P Sampling" enabled={minPOn} onToggle={setMinPOn} value={minP} min={0} max={1} step={0.01} format={(n) => String(n)} onChange={onMinPChange} />
     </div>
   );
 }
@@ -371,7 +428,7 @@ function SpeculativeDecodingContent({
           )}
         </div>
       </div>
-      <SliderRow label="Drafting Probability Cutoff" value={cutoff} min={0} max={1} step={0.01} format={(n) => n.toFixed(2)} onChange={setCutoff} />
+      <SliderRow label="Drafting Probability Cutoff" value={cutoff} min={0} max={1} step={0.01} format={(n) => String(n)} onChange={setCutoff} />
       <SliderRow label="Min Draft Size" value={minDraft} min={0} max={16} step={1} onChange={setMinDraft} />
       <SliderRow label="Max Draft Size" value={maxDraft} min={1} max={64} step={1} onChange={setMaxDraft} />
     </div>

@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-
+import json
 from app.modules.local_server.application.service import LocalServerService
 from app.modules.local_server.presentation.request_schemas import (
     LoadModelRequest,
@@ -135,14 +135,38 @@ def load_model(
     request: LoadModelRequest,
 ):
     service.increment_request_count()
+
+    service.add_log(
+        "INFO",
+        "POST /api/v1/local-server/load",
+    )
+
+    service.add_log(
+        "INFO",
+        json.dumps(
+            request.model_dump(),
+            indent=2,
+        ),
+    )
+
     service.load_model(
         model_id=request.model_id,
         hf_repository=request.hf_repository,
     )
 
-    return {
-        "message": "Model loaded"
+    response = {
+        "message": "Model loaded",
     }
+
+    service.add_log(
+        "INFO",
+        json.dumps(
+            response,
+            indent=2,
+        ),
+    )
+
+    return response
 
 @router.post("/unload")
 def unload_model(

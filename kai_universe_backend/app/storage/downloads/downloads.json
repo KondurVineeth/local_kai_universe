@@ -226,5 +226,29 @@
     "started_at": "2026-06-29T07:34:40.203040",
     "completed_at": "2026-06-29T07:37:31.893817",
     "error_message": null
+  },
+  {
+    "id": "0c9c3fa0-dabe-4f2f-9a8c-4505c31ce9ca",
+    "model_id": "microsoft-phi-3-mini-128k-instruct",
+    "quantization": "Q4_K_M",
+    "total_bytes": 2612416214,
+    "received_bytes": 0,
+    "status": "completed",
+    "bytes_per_second": 0,
+    "started_at": "2026-07-01T07:57:45.838987",
+    "completed_at": "2026-07-01T07:57:58.267425",
+    "error_message": null
+  },
+  {
+    "id": "607ce3d6-3f46-4d5e-a208-eb1abb808e14",
+    "model_id": "qwen-qwen3-8b",
+    "quantization": "Q4_K_M",
+    "total_bytes": 5637319198,
+    "received_bytes": 0,
+    "status": "failed",
+    "bytes_per_second": 0,
+    "started_at": "2026-07-02T07:46:41.695204",
+    "completed_at": null,
+    "error_message": "Server error '502 Bad Gateway' for url 'http://127.0.0.1:9000/models/download'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502"
   }
 ]

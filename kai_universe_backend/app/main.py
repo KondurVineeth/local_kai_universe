@@ -3,13 +3,11 @@ from app.modules.discover.presentation.routes import (router as discover_router,
 from fastapi.middleware.cors import CORSMiddleware
 from app.modules.downloads.presentation.routes import (router as downloads_router,)
 from app.modules.my_models.presentation.routes import (router as my_models_router,)
-from app.modules.chat.presentation.routes import (
-    router as chat_router,
-)
-from app.modules.local_server.presentation.routes import (
-    router as local_server_router,
-)
+from app.modules.chat.presentation.routes import (router as chat_router,)
+from app.modules.local_server.presentation.routes import (router as local_server_router,)
 from app.modules.local_server.presentation import public_api_router
+from app.modules.embeddings.presentation.routes import (router as embeddings_router,)
+from app.modules.completions.presentation.routes import (router as completions_router,)
 
 app = FastAPI(
     title="KAI Universe Backend",
@@ -49,6 +47,18 @@ app.include_router(
 app.include_router(
     public_api_router.router,
     prefix="/api/v1",
+)
+
+app.include_router(
+    embeddings_router,
+    prefix="/api/v1/embeddings",
+    tags=["Embeddings"],
+)
+
+app.include_router(
+    completions_router,
+    prefix="/api/v1/completions",
+    tags=["Completions"],
 )
 
 app.add_middleware(

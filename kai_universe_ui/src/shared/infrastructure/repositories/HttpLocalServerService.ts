@@ -35,6 +35,40 @@ export interface ServerLog {
   message: string;
 }
 
+export interface ChatMessage {
+  role: string;
+  content: string;
+}
+
+export interface ChatRequest {
+    model: string;
+    messages: ChatMessage[];
+    max_completion_tokens: number;
+    temperature: number;
+    top_p: number;
+    top_k: number;
+    repetition_penalty: number;
+    seed: number | null;
+    stream: boolean;
+    stream_options: unknown | null;
+    n: number;
+    store: boolean;
+}
+
+export interface EmbeddingRequest {
+    model: string;
+    input: string | string[];
+}
+
+export interface CompletionRequest {
+    model: string;
+    prompt: string;
+    max_tokens: number;
+    temperature: number;
+    top_p: number;
+    stream: boolean;
+}
+
 export class HttpLocalServerService {
     async getStatus(): Promise<ServerInfo> {
   const response = await fetch(`${API_BASE_URL}/status`);
@@ -142,6 +176,7 @@ async unloadModel(
   }
 }
 
+
 async getLogs(): Promise<ServerLog[]> {
   const response = await fetch(`${API_BASE_URL}/logs`);
 
@@ -150,5 +185,75 @@ async getLogs(): Promise<ServerLog[]> {
   }
 
   return await response.json();
+}
+
+async chat(
+    request: ChatRequest,
+): Promise<unknown> {
+
+    const response = await fetch(
+        "http://127.0.0.1:8000/api/v1/chat",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(request),
+        },
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to call chat endpoint");
+    }
+
+    return await response.json();
+}
+
+async embeddings(
+    request: EmbeddingRequest,
+): Promise<unknown> {
+
+    const response = await fetch(
+        "http://127.0.0.1:8000/api/v1/embeddings",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(request),
+        },
+    );
+
+    if (!response.ok) {
+        throw new Error(
+            "Failed to call embeddings endpoint",
+        );
+    }
+
+    return await response.json();
+}
+
+async completions(
+    request: CompletionRequest,
+): Promise<unknown> {
+
+    const response = await fetch(
+        "http://127.0.0.1:8000/api/v1/completions",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(request),
+        },
+    );
+
+    if (!response.ok) {
+        throw new Error(
+            "Failed to call completions endpoint",
+        );
+    }
+
+    return await response.json();
 }
 }

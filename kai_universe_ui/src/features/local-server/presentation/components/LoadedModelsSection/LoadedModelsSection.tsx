@@ -41,7 +41,10 @@ export function LoadedModelsSection() {
     }
 
     const modelId = ModelId.of(firstModel.model_id);
-
+    console.log(
+    "Dispatching selectedModelSet:",
+    modelId,
+);
     dispatch(
         selectedModelSet(modelId),
     );

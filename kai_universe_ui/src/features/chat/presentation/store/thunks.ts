@@ -343,7 +343,8 @@ export function continueThunk(
     );
 
     const modelId = selectLoadedModelId(getState());
-
+    console.log("Loaded Model ID:", modelId);
+    console.log("Shell State:", getState().shell);
     try {
       if (!modelId) {
         throw new Error('No model loaded.');
@@ -355,7 +356,7 @@ export function continueThunk(
           signal: controller.signal,
           continuation: true,
           config: simulateConfig,
-          model: modelId ?? 'google/gemma-3-1b-it',
+          model: modelId,
         },
       )) {
         if (controller.signal.aborted) break;
@@ -541,9 +542,15 @@ async function streamAssistantResponse(
     () => container.chat.chatRepository.appendMessage(threadId, assistantMsg),
     'stream:appendPlaceholder',
   );
-
+  const modelId = selectLoadedModelId(getState());
   const history = getState().chat.messagesByThread[threadId] ?? [];
-
+  console.log(
+  'History:',
+  history.map((m) => ({
+    role: m.role,
+    content: m.content,
+  })),
+);
   const controller = registerStream(threadId);
   const startMs = Date.now();
   let reasoningStartMs = 0;
@@ -555,14 +562,16 @@ async function streamAssistantResponse(
   let lastChunkDone = false;
   let stopReasonFromSim: string | undefined;
   let errored = false;
+  if (!modelId) {
+  throw new Error('No model loaded.');
+}
   try {
     for await (const chunk of container.chat.chatStreamSimulator.simulate(threadId, history, {
-      reasoningEnabled: options.reasoningEnabled,
-      signal: controller.signal,
-      config: simulateConfig,
-      inferenceConfig: cfg,
-
-    })) {
+  reasoningEnabled: options.reasoningEnabled,
+  signal: controller.signal,
+  config: simulateConfig,
+  model: modelId,
+})) {
       if (controller.signal.aborted) break;
       const kind = chunk.kind ?? 'body';
       if (kind === 'reasoning') {
